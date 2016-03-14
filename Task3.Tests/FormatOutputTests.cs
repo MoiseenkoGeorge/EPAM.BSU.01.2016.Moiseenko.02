@@ -18,7 +18,7 @@ namespace Task3.Tests
         [TestCase(123, Result = "7B")]
         [TestCase(1, Result = "1")]
         [TestCase(10, Result = "A")]
-        [TestCase(-1, ExpectedException = typeof(ArgumentOutOfRangeException))]
+        [TestCase(-1, Result = "FFFFFFFF")]
         public string FormatOutputOfNumber(int number)
         {
             return number.ConvertTo16Hex();
