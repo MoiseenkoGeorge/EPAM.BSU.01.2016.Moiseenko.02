@@ -3,57 +3,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Task2
 {
     public static class Algorithm
     {
         #region public
-        public static int FindGCD(int a,int b,out long time)
+        #region simple
+        public static int FindGCD(int a,int b,out double time)
         {
-            long start = DateTime.Now.Ticks;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             int gcd = GCD(a, b);
-            time = (DateTime.Now.Ticks - start)/TimeSpan.TicksPerMillisecond;
+            time = sw.Elapsed.TotalMilliseconds;
             return gcd;
         }
-        public static int FindGCD(int a,int b,int c,out long time)
+        public static int FindGCD(int a, int b) => GCD(a, b);
+        public static int FindGCD(int a,int b,int c,out double time) => GCD(GCD, a, b, c, out time);
+        public static int FindGCD(int a, int b, int c) => GCD(GCD, a, b, c);
+        public static int FindGCD(out double time, params int[] numbers) => GCD(GCD, out time, numbers);
+        public static int FindGCD(params int[] numbers) => GCD(GCD, numbers);
+        #endregion
+        #region binary
+        public static int BinaryFindGCD(int a,int b,out double time)
         {
-            long start = DateTime.Now.Ticks;
-            int gcd = GCD(GCD(a, b), c);
-            time = (DateTime.Now.Ticks - start) / TimeSpan.TicksPerMillisecond;
-            return gcd;
-        }
-        public static int FindGCD(out long time, params int[] numbers)
-        {
-            long start = DateTime.Now.Ticks;
-            int gcd = numbers.Aggregate(GCD);
-            time = (DateTime.Now.Ticks - start) / TimeSpan.TicksPerMillisecond;
-            return gcd;
-        }
-
-        public static int FindBinaryGCD(int a,int b,out long time)
-        {
-            long start = DateTime.Now.Ticks;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             int gcd = BinaryGCD(a, b);
-            time = (DateTime.Now.Ticks - start) / TimeSpan.TicksPerMillisecond;
+            time = sw.Elapsed.TotalMilliseconds;
             return gcd;
         }
-        public static int FindBinaryGCD(int a, int b, int c,out long time)
-        {
-            long start = DateTime.Now.Ticks;
-            int gcd = BinaryGCD(BinaryGCD(a, b), c);
-            time = (DateTime.Now.Ticks - start) / TimeSpan.TicksPerMillisecond;
-            return gcd;
-        }
-        public static int FindBinaryGCD(out long time,params int[] numbers)
-        {
-            long start = DateTime.Now.Ticks;
-            int gcd = numbers.Aggregate(BinaryGCD);
-            time = (DateTime.Now.Ticks - start) / TimeSpan.TicksPerMillisecond;
-            return gcd;
-        }
+        public static int BinaryFindGCD(int a, int b) => BinaryGCD(a, b);
+        public static int BinaryFindGCD(int a, int b, int c, out double time) => GCD(BinaryGCD, a, b, c, out time);
+        public static int BinaryFindGCD(int a, int b, int c) => GCD(BinaryGCD, a, b, c);
+        public static int BinaryFindGCD(out double time, params int[] numbers) => GCD(BinaryGCD, out time, numbers);
+        public static int BinaryFindGCD(params int[] numbers) => GCD(BinaryGCD, numbers);
+        #endregion
         #endregion
         #region private
+        private static int GCD(Func<int, int, int> function,out double time, params int[] numbers)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            int gcd = GCD(function, numbers);
+            time = sw.Elapsed.TotalMilliseconds;
+            return gcd;
+        }
+        private static int GCD(Func<int, int, int> function, params int[] numbers) => numbers.Aggregate(function);
+        private static int GCD(Func<int, int, int> function, int a, int b, int c,out double time)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            int gcd = GCD(function, a, b, c);
+            time = sw.Elapsed.TotalMilliseconds;
+            return gcd;
+        }
+        private static int GCD(Func<int, int, int> function, int a, int b, int c) => function(function(a, b), c);
         private static int GCD(int a, int b)
         {
             a = Math.Abs(a);

@@ -17,7 +17,7 @@ namespace Task2.Tests
         [TestCase(8, 16, Result = 8)]
         public int FindGCD_for2(int a,int b)
         {
-            long time;
+            double time;
             return Task2.Algorithm.FindGCD(a, b,out time);
         }
 
@@ -28,7 +28,7 @@ namespace Task2.Tests
         [TestCase(0, 0, 3, Result = 3)]
         public int FindGCD_for3(int a, int b,int c)
         {
-            long time;
+            double time;
             return Task2.Algorithm.FindGCD(a, b, c, out time);
         }
 
@@ -39,7 +39,7 @@ namespace Task2.Tests
         [TestCase(0, 0, 0, 3, Result = 3)]
         public int FindGCD_forn(int a, int b, int c,int d)
         {
-            long time;
+            double time;
             return Task2.Algorithm.FindGCD(out time,a,b,c,d);
         }
 
@@ -51,8 +51,8 @@ namespace Task2.Tests
         [TestCase(8, 16, Result = 8)]
         public int BinaryFindGCD_for2(int a, int b)
         {
-            long time;
-            return Task2.Algorithm.FindBinaryGCD(a, b, out time);
+            double time;
+            return Task2.Algorithm.BinaryFindGCD(a, b, out time);
         }
 
         [Test]
@@ -62,8 +62,8 @@ namespace Task2.Tests
         [TestCase(0, 0, 3, Result = 3)]
         public int BinaryFindGCD_for3(int a, int b, int c)
         {
-            long time;
-            return Task2.Algorithm.FindBinaryGCD(a, b, c, out time);
+            double time;
+            return Task2.Algorithm.BinaryFindGCD(a, b, c, out time);
         }
 
         [Test]
@@ -73,8 +73,8 @@ namespace Task2.Tests
         [TestCase(0, 0, 0, 3, Result = 3)]
         public int BinaryFindGCD_forN(int a, int b, int c, int d)
         {
-            long time;
-            return Task2.Algorithm.FindBinaryGCD(out time, a, b, c, d);
+            double time;
+            return Task2.Algorithm.BinaryFindGCD(out time, a, b, c, d);
         }
     }
 }
