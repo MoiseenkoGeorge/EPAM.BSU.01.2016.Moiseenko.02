@@ -25,12 +25,36 @@ namespace Task4
             if (format == null)
                 throw new ArgumentNullException(nameof(format), "Require not null argument");
             if (formatProvider == null)
-                formatProvider = CultureInfo.CurrentCulture;
-            return string.Format(formatProvider, format, Name, ContactPhone, Revenue); // {0} - Name, {1} - ContactPhone, {2} - Revenue
+                formatProvider = CultureInfo.InvariantCulture;
+            switch(format.ToUpperInvariant())
+            {
+                case "NRP":
+                    if(formatProvider is CustomFormatProvider)
+                        return string.Format(formatProvider, "{0:N} {1:R} {2:P}", Name, Revenue, ContactPhone);
+                    return string.Format(formatProvider, "{0} {1:C} {2}", Name, Revenue, ContactPhone);
+                case "NR":
+                    if (formatProvider is CustomFormatProvider)
+                        return string.Format(formatProvider, "{0:N} {1:R}", Name, Revenue);
+                    return string.Format(formatProvider, "{0} {1:C}", Name, Revenue);
+                case "G":
+                    return string.Format(formatProvider, "{0}", Name);
+                case "R":
+                    if (formatProvider is CustomFormatProvider)
+                        return string.Format(formatProvider, "{0:R}", Revenue);
+                    return string.Format(formatProvider, "{0}", Revenue);
+                default:
+                    throw new FormatException(String.Format("The {0} format string is not supported.", format));
+
+            }
+
         }
         public string ToString(string format)
         {
-            return this.ToString(format, CultureInfo.CurrentCulture);
+            return this.ToString(format, CultureInfo.InvariantCulture);
+        }
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
